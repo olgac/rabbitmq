@@ -1,0 +1,54 @@
+version: "3.6"
+services:
+  rabbitmq-01:
+    image: olgac/rabbitmq:3.7.8-management
+    hostname: rabbitmq-01
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=Passw0rd
+      - RABBITMQ_ERLANG_COOKIE="MY-SECRET-KEY-123"
+    networks:
+      - prod
+    volumes:
+      - rabbitmq-01-data:/var/lib/rabbitmq
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.labels.rabbitmq1 == true]
+  rabbitmq-02:
+    image: olgac/rabbitmq:3.7.8-management
+    hostname: rabbitmq-02
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=Passw0rd
+      - RABBITMQ_ERLANG_COOKIE="MY-SECRET-KEY-123"
+    networks:
+      - prod
+    volumes:
+      - rabbitmq-02-data:/var/lib/rabbitmq
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.labels.rabbitmq2 == true]
+  rabbitmq-03:
+    image: olgac/rabbitmq:3.7.8-management
+    hostname: rabbitmq-03
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=Passw0rd
+      - RABBITMQ_ERLANG_COOKIE="MY-SECRET-KEY-123"
+    networks:
+      - prod
+    volumes:
+      - rabbitmq-03-data:/var/lib/rabbitmq
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.labels.rabbitmq3 == true]
+networks:
+  prod:
+    external: true
+volumes:
+  rabbitmq-01-data:
+  rabbitmq-02-data:
+  rabbitmq-03-data:
